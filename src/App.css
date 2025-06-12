@@ -1,4 +1,16 @@
 @import "tailwindcss";
+
+@font-face {
+  font-family: "Manrope";
+  font-display: swap;
+  font-weight: 200 700;
+  src: url("/public/fonts/manrope-variable.ttf") format("truetype");
+}
+
+@theme {
+  --font-manrope: "Manrope", "sans-serif";
+}
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
