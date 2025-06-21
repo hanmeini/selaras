@@ -15,7 +15,7 @@ export default function Footer() {
         <div className="flex flex-col items-start">
           <div className="flex items-center">
             <img src={logoNoName} alt="logo" className='w-14 h-14' />
-            <h1 className='font-semibold font-manrope text-5xl text-white ml-4'>selaras</h1>
+            <h1 className='font-semibold font-manrope text-5xl text-white ml-4 mb-3'>selaras</h1>
           </div>
           <p className='text-[#FAFAFA] font-manrope mt-8'>Platform rekomendasi destinasi yang membantumu menemukan</p>
           <p className='text-[#FAFAFA] font-manrope'>tempat terbaik sesuai suasana hati dan kebutuhanmu.</p>

@@ -6,6 +6,7 @@ import person from "../assets/person-icon.png";
 import { useState, useRef, useEffect } from "react";
 import stars from '../assets/stars.png'
 import quiz from '../assets/quiz.png'
+import logoNonameBlue from '../assets/logo-noname-blue.png'
 import React from "react";
 
 
@@ -45,7 +46,10 @@ export default function Navbar() {
       <div className="flex items-center justify-between px-5 lg:px-7 lg:py-5">
         {/* Logo kiri */}
         <div className="flex-shrink-0">
-          <img src={logo} alt="logo" className="h-12 w-auto lg:h-12 " />
+          <img src={logo} alt="logo" className="h-12 w-auto md:inline-block hidden" />
+        </div>
+        <div className="flex items-end sm:ml-8">
+          <img src={logoNonameBlue} alt="logo" className="h-10 w-auto md:hidden" />
         </div>
 
         {/* Navigasi tengah */}

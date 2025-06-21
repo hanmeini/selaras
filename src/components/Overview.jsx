@@ -37,7 +37,6 @@ const Overview = () => {
        <p className='absolute max-w-1/3 bottom-2 left-2 font-manrope text-md font-semibold'>Artificial Intelligence</p>
       </div>
     </div>
-
   </div>
 
   )

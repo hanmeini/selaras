@@ -12,6 +12,7 @@ import Rekomendasi from './pages/Rekomendasi';
 import AdminRoute from './context/AdminRoute'
 import AdminDashboardPage from './admin/dashboardAdmin'
 import ChatPage from './pages/ChatPage';
+import LandingPage from './pages/LandingPage';
 
 function App() {
 
@@ -19,8 +20,7 @@ function App() {
     <>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path="about" element={<About />} />
+          <Route index element={<LandingPage />} />
           <Route
             path="/quiz"
             element={

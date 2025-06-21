@@ -8,7 +8,6 @@ import sparkle from '../assets/sparkle.png';
 const About = () => {
   return (
     <section id='about' className='min-h-screen min-w-screen flex items-center justify-center'>
-      {/* tentang kami */}
         <img src={btr} className='top-14 mt-40 lg:w-30 lg:h-30 absolute items-start justify-start left-36'/>
         <img src={gunung} className='top-1 mt-40 lg:w-30 lg:h-30 absolute items-start justify-start right-28'/>
         <div className='max-w-2xl text-center top-0 absolute mt-52'>
