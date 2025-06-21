@@ -1,45 +1,67 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
+import { useAuth } from '../context/Authcontext'; // Sesuaikan path
 
-// Ikon bisa Anda simpan di sini atau impor dari file lain
-const UserIcon = () => ( <div className="w-8 h-8 rounded-full bg-gray-400 flex-shrink-0"></div> );
-const AiIcon = () => ( <div className="w-8 h-8 rounded-full bg-blue-500 text-white flex items-center justify-center font-bold text-lg flex-shrink-0">✧</div> );
+// Impor aset-aset yang dibutuhkan
+import SelarasAI from '../assets/selarasAi.png'; // Ganti dengan path ikon AI Anda
+import person from '../assets/person-icon.png'; // Ganti dengan path ikon person default Anda
 
+// Komponen Ikon AI, bisa Anda sesuaikan
+const AiIcon = () => ( 
+  <img 
+    src={SelarasAI} 
+    alt="Ikon Selaras AI" 
+    className="w-8 h-8 rounded-full object-cover"
+  /> 
+);
+
+// Terima 'message' dan 'userProfile' sebagai props
 const ChatMessage = ({ message }) => {
   const { role, content } = message;
   const isUser = role === 'user';
+  const { userProfile } = useAuth();
+
+  const UserIcon = () => {
+    if (userProfile && userProfile.photoURL) {
+      return (
+        <img 
+          src={userProfile.photoURL} 
+          alt="Foto Profil Anda" 
+          className="w-8 h-8 rounded-full object-cover"
+        />
+      );
+    }
+    return (
+      <div className="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center">
+        <img src={person} alt="Ikon Pengguna" className="w-5 h-5" />
+      </div>
+    );
+  };
 
   return (
-    // Kontainer utama untuk satu baris pesan, menggunakan flexbox
-    <div className={`flex w-full ${isUser ? 'justify-end' : 'justify-start'}`}>
+    <div className={`flex w-full items-start gap-3 ${isUser ? 'justify-end' : 'justify-start'}`}>
       
-      <div className="flex items-start gap-3 max-w-2xl">
-        
-        {/* Tampilkan Ikon AI di kiri */}
-        {!isUser && <AiIcon />}
-        
-        {/* Gelembung Pesan */}
-        <div 
-          className={`px-4 py-3 rounded-2xl ${
-            isUser 
-            ? 'bg-gray-200 text-gray-800' // Gaya untuk user (kanan)
-            : 'bg-white' // Gaya untuk AI (kiri)
-          }`}
-        >
-          <p className="font-bold text-sm mb-1">
-            {isUser ? 'Anda' : 'Selaras AI'}
-          </p>
-          
-          {/* Konten pesan dengan text-justify dan styling dari 'prose' */}
-          <div className="prose prose-sm max-w-none text-justify">
-            <ReactMarkdown>{content}</ReactMarkdown>
-          </div>
-        </div>
+      {!isUser && <AiIcon />}
+      
+      {/* Chat */}
+      <div 
+        className={`px-4 py-3 rounded-2xl w-full max-w-xl ${ 
+          isUser 
+          ? 'bg-[#BEE1E6] text-gray-800' // Gaya untuk user
+          : 'bg-white border'          // Gaya untuk AI 
+        }`}
+      >
+        <p className={`font-bold text-sm mb-1 ${isUser ? 'text-right' : 'text-left'}`}>
+          {isUser ? 'Anda' : 'Selaras AI'}
+        </p>
 
-        {/* Tampilkan Ikon User di kanan */}
-        {isUser && <UserIcon />}
-        
+        <div className="prose prose-sm max-w-none text-justify">
+          <ReactMarkdown>{content}</ReactMarkdown>
+        </div>
       </div>
+
+      {isUser && <UserIcon />}
+      
     </div>
   );
 };

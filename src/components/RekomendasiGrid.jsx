@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { db } from '../../firebase-config';
-import { collection, query, where, getDocs, limit } from 'firebase/firestore'; // Impor 'limit'
+import { collection, query, where, getDocs } from 'firebase/firestore'; 
 import WisataCard from './WisataCard';
-import { useParams, useLocation } from 'react-router-dom'; // <== tambahkan useParams
+import { useParams, useLocation } from 'react-router-dom'; 
+import { Link } from 'react-router-dom';
 
-const RekomendasiGrid = () => { // Terima 'kategori' dari prop
+const RekomendasiGrid = () => { 
   const [destinasi, setDestinasi] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { kategori } = useParams(); // /rekomendasi/:kategori
-  const location = useLocation();   // ?mood=semua&aksesDifabel=false
-  const searchParams = new URLSearchParams(location.search); // ✅
+  const { kategori } = useParams(); 
+  const location = useLocation();   
+  const searchParams = new URLSearchParams(location.search); 
 
   const pilihanMood = searchParams.get('mood') || 'semua';
   const aksesDifabelParam = searchParams.get('aksesDifabel');
-  const butuhAksesDifabel = aksesDifabelParam === 'true'; // ✅ ubah jadi boolean
+  const butuhAksesDifabel = aksesDifabelParam === 'true';
 
 
   useEffect(() => {
@@ -57,7 +58,6 @@ const RekomendasiGrid = () => { // Terima 'kategori' dari prop
     return <p className="text-center">Silakan pilih kategori atau filter terlebih dahulu.</p>
   }
 
-  // ( ... sisa kode JSX Anda tetap sama ... )
   return (
     <section className="px-4 md:px-8 lg:px-16 py-12">
       <div className="text-center mb-10">
@@ -66,7 +66,7 @@ const RekomendasiGrid = () => { // Terima 'kategori' dari prop
         </h2>
         {kategori && (
           <p className="text-gray-600 mt-2 capitalize">
-            Menampilkan hasil untuk: {kategori}
+            Destinasi impian, disesuaikan khusus untuk kamu yaitu {kategori}
             {pilihanMood && pilihanMood !== 'semua' && `, mood ${pilihanMood}`}
             {butuhAksesDifabel && ', ramah difabel'}
           </p>
@@ -76,15 +76,18 @@ const RekomendasiGrid = () => { // Terima 'kategori' dari prop
       {destinasi.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {destinasi.map(item => (
-            <WisataCard 
-              key={item.id}
-              gambarUrl={item.imageUrl}
-              nama={item.name}
-              lokasi={item.location}
-              deskripsi={item.description}
-              moods={item.mood}
-              aksesDifabel={item.aksesDifabel}
-            />
+            <Link to={`/wisata/${item.id}`} key={item.id}>
+              <WisataCard 
+                key={item.id}
+                item={item}
+                gambarUrl={item.imageUrl}
+                nama={item.name}
+                lokasi={item.location}
+                deskripsi={item.description}
+                moods={item.mood}
+                aksesDifabel={item.aksesDifabel}
+              />
+            </Link>
           ))}
         </div>
       ) : (

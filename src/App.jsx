@@ -12,6 +12,9 @@ import Rekomendasi from './pages/Rekomendasi';
 import AdminRoute from './context/AdminRoute'
 import AdminDashboardPage from './admin/dashboardAdmin'
 import ChatPage from './pages/ChatPage';
+import LandingPage from './pages/LandingPage';
+import ProfilePage from './pages/Profile';
+import DetailPage from './pages/DetailPage';
 
 function App() {
 
@@ -19,8 +22,8 @@ function App() {
     <>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path="about" element={<About />} />
+          <Route index element={<LandingPage />} />
+          <Route path='/profile' element={<ProfilePage />} />
           <Route
             path="/quiz"
             element={
@@ -38,10 +41,10 @@ function App() {
             }
           />
           <Route
-            path="/SelarasAI"
+            path="/wisata/:placeId"
             element={
               <PrivateRoute>
-                <ChatPage />
+                <DetailPage />
               </PrivateRoute>
             }
           />
@@ -54,7 +57,14 @@ function App() {
             } 
           />
         </Route>
-
+        <Route
+            path="/SelarasAI"
+            element={
+              <PrivateRoute>
+                <ChatPage />
+              </PrivateRoute>
+            }
+        />
         <Route path="register" element={<Register />} />
         <Route path="login" element={<Login />} />
       </Routes>

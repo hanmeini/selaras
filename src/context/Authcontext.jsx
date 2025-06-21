@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { signOut ,onAuthStateChanged } from "firebase/auth";
-import { doc, getDoc } from "firebase/firestore";
-import { auth, db } from "../../firebase-config"; // Sesuaikan path
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { doc, getDoc, setDoc } from "firebase/firestore"; // Impor getDoc dan setDoc
+import { auth, db } from "../../firebase-config"; // Pastikan db juga diimpor
 
 const AuthContext = React.createContext();
 
@@ -13,27 +13,33 @@ export function AuthProvider({ children }) {
   const [userProfile, setUserProfile] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const logout = () => {
-    return signOut(auth);
-  };
-
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
-        // LOG 1: Cek apakah user terdeteksi
-        console.log("AuthContext: User terdeteksi, UID:", user.uid);
-        
         const docRef = doc(db, "users", user.uid);
         const docSnap = await getDoc(docRef);
-        
+
         if (docSnap.exists()) {
-          // LOG 2: Jika dokumen profil ditemukan
-          console.log("AuthContext: Dokumen profil DITEMUKAN!", docSnap.data());
-          setUserProfile({ uid: user.uid, ...docSnap.data() });
+          setUserProfile({
+            uid: user.uid,
+            photoURL: user.photoURL, 
+            ...docSnap.data()
+          });
         } else {
-          // LOG 3: Jika dokumen profil TIDAK ditemukan
-          console.error("AuthContext: FATAL! Dokumen profil TIDAK DITEMUKAN di Firestore untuk user ini.");
-          setUserProfile(user); // Fallback ke data auth dasar
+
+          const newUserProfile = {
+            name: user.displayName,
+            email: user.email,
+            photoURL: user.photoURL,
+            role: "user", 
+          };
+
+          await setDoc(docRef, newUserProfile);
+
+          setUserProfile({
+            uid: user.uid,
+            ...newUserProfile
+          });
         }
       } else {
         setUserProfile(null);
@@ -44,14 +50,16 @@ export function AuthProvider({ children }) {
     return unsubscribe;
   }, []);
 
+  const logout = () => {
+    return signOut(auth);
+  };
+
   const value = {
     userProfile,
     loading,
-    logout, 
+    logout,
   };
 
-  // PENTING: Jangan render apapun sebelum proses loading selesai
-  // Ini adalah kunci untuk mencegah "race condition"
   return (
     <AuthContext.Provider value={value}>
       {!loading && children}
