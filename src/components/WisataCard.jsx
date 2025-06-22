@@ -12,8 +12,8 @@ const WisataCard = ({ gambarUrl, nama, lokasi, deskripsi }) => {
       </button>
 
       <div className="absolute bottom-0 left-0 p-6 text-white">
-        <h3 className="text-2xl font-bold">{nama}, {lokasi}</h3>
-        <p className="text-sm mt-1 opacity-90">{deskripsi}</p>
+        <h3 className="text-2xl font-bold text-left">{nama}, {lokasi}</h3>
+        <p className="text-sm mt-1 opacity-90 text-left">{deskripsi}</p>
       </div>
     </div>
   );
