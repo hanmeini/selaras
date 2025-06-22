@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth } from '../context/Authcontext'; // Sesuaikan path
-import { db } from '../../firebase-config'; // Sesuaikan path
+import { useAuth } from '../context/Authcontext';
+import { updateProfile } from "firebase/auth";
+import { db, auth } from '../../firebase-config';
 import { doc, updateDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
-import { FiUser, FiLogOut } from 'react-icons/fi';
+import { FiUser, FiLogOut, FiCamera } from 'react-icons/fi';
 
 const ProfilePage = () => {
-  const { userProfile, logout } = useAuth();
+  const { userProfile, logout, refreshUserProfile } = useAuth(); 
   const navigate = useNavigate();
   const [isEditing, setIsEditing] = useState(false);
   const [name, setName] = useState('');
@@ -14,6 +15,8 @@ const ProfilePage = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState('');
+  const [imageFile, setImageFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState('');
 
   useEffect(() => {
     if (userProfile) {
@@ -33,33 +36,75 @@ const ProfilePage = () => {
   };
 
   const handleUpdateProfile = async (e) => {
-    e.preventDefault();
-    if (!userProfile) return;
+      e.preventDefault();
+      if (!userProfile) return;
 
-    setIsLoading(true);
-    setMessage('Menyimpan perubahan...');
+      setIsLoading(true);
+      setMessage('Menyimpan perubahan...');
 
-    const userDocRef = doc(db, 'users', userProfile.uid);
-    const dataToUpdate = {
-      name: name,
-      phoneNumber: phoneNumber,
-    };
+      let newPhotoURL = userProfile.photoURL; 
 
-    try {
-      await updateDoc(userDocRef, dataToUpdate);
-      setMessage('Profil berhasil diperbarui!');
-      setIsEditing(false);
-    } catch (error) {
-      setMessage('Gagal memperbarui profil.');
-      console.error("Error updating document: ", error);
-    } finally {
-      setIsLoading(false);
-    }
+      if (imageFile) {
+          console.log("Mengupload gambar baru...");
+          const formData = new FormData();
+          formData.append('file', imageFile);
+          formData.append('upload_preset', 'akk5fymr');
+
+          try {
+              const response = await fetch(
+                  `https://api.cloudinary.com/v1_1/dtjg8wcls/image/upload`, 
+                  { method: 'POST', body: formData }
+              );
+              const data = await response.json();
+              newPhotoURL = data.secure_url;
+              console.log("Upload berhasil, URL baru:", newPhotoURL);
+          } catch (uploadError) {
+              setMessage('Gagal mengupload gambar.');
+              console.error("Cloudinary upload error:", uploadError);
+              setIsLoading(false);
+              return;
+          }
+      }
+
+      const userDocRef = doc(db, 'users', userProfile.uid);
+      const dataToUpdate = {
+          name: name,
+          phoneNumber: phoneNumber,
+          photoURL: newPhotoURL, 
+      };
+
+      try {
+          await updateProfile(auth.currentUser, { 
+              displayName: name, 
+              photoURL: newPhotoURL 
+          });
+
+          await updateDoc(userDocRef, dataToUpdate);
+          await refreshUserProfile(); 
+
+          setMessage('Profil berhasil diperbarui!');
+          setIsEditing(false);
+          setImageFile(null);
+          setImagePreview('');
+      } catch (error) {
+          setMessage('Gagal memperbarui profil.');
+          console.error("Error updating profile:", error);
+      } finally {
+          setIsLoading(false);
+      }
   };
 
   if (!userProfile) {
     return <div>Memuat data profil...</div>;
   }
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setImageFile(file);
+      setImagePreview(URL.createObjectURL(file)); 
+    }
+  };
 
   return (
     <div className="bg-white min-h-screen pt-20">
@@ -67,12 +112,18 @@ const ProfilePage = () => {
         <div className="flex flex-col md:flex-row gap-8">
           <aside className="w-full md:w-1/4 lg:w-1/5 shrink-0">
             <div className="bg-white p-6 rounded-2xl shadow-md text-center h-full">
-              <div className="w-24 h-24 rounded-full mx-auto mb-4 overflow-hidden border-2 border-gray-200">
-                <img 
-                  src={userProfile.photoURL || `https://ui-avatars.com/api/?name=${name || 'S'}&background=random`} 
-                  alt="Foto Profil" 
-                  className="w-full h-full object-contain"
-                />
+              <div className="relative w-24 h-24 mx-auto mb-4">
+                  <img 
+                    src={imagePreview || userProfile.photoURL || `https://ui-avatars.com/api/?name=${name || 'S'}&background=random`} 
+                    alt="Foto Profil" 
+                    className="w-full h-full object-cover rounded-full border-2 border-gray-200 shadow-sm"
+                  />
+                  {isEditing && (
+                    <label htmlFor="file-upload" className="absolute -bottom-1 -right-1 bg-[#003366] p-2 rounded-full cursor-pointer hover:bg-blue-700 border-2 border-white">
+                      <FiCamera className="w-4 h-4 text-white"/>
+                      <input id="file-upload" type="file" className="hidden" accept="image/png, image/jpeg" onChange={handleImageChange} />
+                    </label>
+                  )}
               </div>
               <h2 className="font-bold text-lg">{name}</h2>
               <button onClick={() => setIsEditing(true)} className="text-sm text-blue-600 hover:underline">

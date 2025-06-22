@@ -23,7 +23,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<LandingPage />} />
-          <Route path='/profile' element={<ProfilePage />} />
+          <Route path='profile' element={<ProfilePage />} />
           <Route
             path="/quiz"
             element={
@@ -33,28 +33,19 @@ function App() {
             }
           />
           <Route
+            path="rekomendasi"
+            element={
+              <PrivateRoute>
+                <Rekomendasi />
+              </PrivateRoute>}
+          />
+          <Route
             path="/rekomendasi/:kategori"
             element={
               <PrivateRoute>
                 <Rekomendasi />
               </PrivateRoute>
             }
-          />
-          <Route
-            path="/wisata/:placeId"
-            element={
-              <PrivateRoute>
-                <DetailPage />
-              </PrivateRoute>
-            }
-          />
-          <Route 
-            path="/admin/dashboard" 
-            element={
-              <AdminRoute>
-                <AdminDashboardPage />
-              </AdminRoute>
-            } 
           />
         </Route>
         <Route
@@ -67,6 +58,22 @@ function App() {
         />
         <Route path="register" element={<Register />} />
         <Route path="login" element={<Login />} />
+        <Route 
+            path="/admin/dashboard" 
+            element={
+              <AdminRoute>
+                <AdminDashboardPage />
+              </AdminRoute>
+            } 
+          />
+          <Route
+            path="/wisata/:placeId"
+            element={
+              <PrivateRoute>
+                <DetailPage />
+              </PrivateRoute>
+            }
+          />
       </Routes>
     </>
   )

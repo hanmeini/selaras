@@ -66,7 +66,6 @@ const ChatPage = () => {
 
     if (docSnap.exists()) {
       const chatData = docSnap.data();
-      // Rekonstruksi percakapan dari data yang tersimpan
       setMessages([
         { role: 'user', content: chatData.prompt },
         { role: 'ai', content: chatData.response }
@@ -101,7 +100,6 @@ const ChatPage = () => {
       const aiMessage = { role: 'ai', content: data.reply };
       setMessages(prev => [...prev, aiMessage]);
 
-      // menyimpan jika ini adalah percakapan baru
       if (currentChatId === null) {
         const chatCollectionRef = collection(db, `users/${userProfile.uid}/chats`);
         const newDocRef = await addDoc(chatCollectionRef, {
@@ -109,7 +107,6 @@ const ChatPage = () => {
           response: data.reply,
           timestamp: serverTimestamp(),
         });
-        // Setelah tersimpan, set ID chat agar percakapan selanjutnya tidak membuat dokumen baru
         setCurrentChatId(newDocRef.id);
       }
       
@@ -158,7 +155,7 @@ const ChatPage = () => {
             </div>
             <button onClick={() => setMobileMenuOpen(false)} className="p-2"><CloseIcon /></button>
           </div>
-          <nav className="flex-1 p-2 space-y-1 overflow-y-auto">
+          <nav className="flex-1 p-2 space-y-1 overflow-y-auto fixed z-1000">
             <button onClick={() => navigate('/')} className="flex items-center gap-3 w-full text-left p-3 rounded-lg hover:bg-gray-200 font-medium text-sm">
               <HomeIcon /> Beranda
             </button>
