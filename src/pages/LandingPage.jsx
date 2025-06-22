@@ -1,4 +1,8 @@
 import React from 'react'
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/autoplay';
 import btr from '../assets/btr.png'
 import prambanan from '../assets/prambanan.png'
 import gunung from '../assets/gunung.png'
@@ -31,6 +35,38 @@ import arrow from '../assets/button-arrow.png'
 import bgHome from '../assets/bg-grid.png'
 
 const LandingPage = () => {
+  const testimonyCards = [
+    {
+      name: 'Biantara Nadif',
+      role: 'Traveler',
+      image: ppByan,
+      text: 'Baru kali ini cari tempat liburan gampang banget. Tinggal pilih mood, langsung dapat rekomendasi yang pas! Selaras benar-benar ngebantu aku nemuin tempat-tempat yang belum pernah kepikiran sebelumnya.',
+      tags: ['#Eksplor', '#Tenang'],
+      date: 'Mei 2025',
+    },
+    {
+      name: 'Erland Pramatta',
+      role: 'Globaltraveler',
+      image: ppErland,
+      text: 'Pilihan tempatnya sesuai banget sama moodku waktu itu. Dapat rekomendasi hidden gem yang nggak kepikiran sebelumnya!',
+      date: 'April 2025',
+    },
+    {
+      name: 'Amanda Nobela',
+      role: 'Product Designer',
+      image: ppNobel,
+      text: 'Selaras ngasih rekomendasi ke Ubud saat aku lagi butuh ketenangan. Suasana alamnya bikin rileks banget!',
+      date: 'Maret 2025',
+    },
+    {
+      name: 'Ahmad Raihan',
+      role: 'IT Consultan',
+      image: ppAhmad,
+      text: 'Awalnya aku bingung mau liburan ke mana karena lagi butuh suasana yang tenang tapi tetap punya pemandangan yang indah. Setelah isi kuis di Selaras, aku direkomendasikan ke Sumba, dan ternyata itu spot yang luar biasa!',
+      tags: ['#Eksplor', '#Tenang'],
+      date: 'Feb 2025',
+    }
+  ];
   return (
     <section id='landingpage' className='overflow-x-hidden'>
         {/* home */}
@@ -66,16 +102,16 @@ const LandingPage = () => {
         </section>
 
         {/* about */}
-        <section id='about' className='min-h-screen min-w-screen flex items-center justify-center relative overflow-x-hidden'>
-            <img src={btr} className='absolute md:top-0 md:left-36 bottom-24 -left-20 w-56 h-56 md:mt-32 md:w-30 md:h-30 items-start justify-start'/>
+        <section id='about' className='min-h-screen min-w-screen flex items-center justify-center relative overflow-x-hidden md:-mb-80 lg:mb-32'>
+            <img src={btr} className='absolute lg:top-20 md:top-0 md:left-36 bottom-24 -left-20 w-56 h-56 md:mt-32 md:w-30 md:h-30 items-start justify-start'/>
             <img src={gunung} className='absolute md:top-0 md:right-28 bottom-28 -right-10 md:mt-32 mt-40 w-56 h-56 md:w-30 md:h-30 items-start justify-start'/>
             <div className='max-w-2xl text-center top-0 absolute mt-52'>
                 <h1 className='text-[#AAB5B5] font-manrope text-md'>Mood kamu, Destinasi kami.</h1>
                 <p className='md:text-4xl text-3xl mt-4 text-transparent bg-clip-text bg-gradient-to-r from-[#1E1E1E] to-[#D3CFCF] font-semibold font-manrope'>Selaras adalah platform rekomendasi perjalanan berbasis AI yang membantu kamu menemukan destinasi liburan sesuai mood dan preferensimu.</p>
             </div>  
-            <img src={emoji} className='absolute lg:bottom-[360px] lg:left-64 md:left-10 sm:bottom-[600px] left-5 top-[450px] lg:w-20 lg:h-20 w-14 h-14'/>
-            <img src={prambanan} className='absolute lg:bottom-[400px] md:bottom-[650px] bottom-28 w-64 h-48 md:w-36 md:h-26'/>
-            <img src={sparkle} className='lg:bottom-92 lg:right-64 md:bottom-[600px] md:right-[70px] absolute lg:w-36 right-7 bottom-[400px] lg:h-26 w-24 h-24'/>
+            <img src={emoji} className='absolute lg:top-[470px] lg:left-64 md:top-[480px] md:left-24 sm:top-[450px] left-5 top-[450px] lg:w-20 lg:h-20 w-14 h-14'/>
+            <img src={prambanan} className='absolute lg:bottom-[100px] lg:left-[520px] md:left-[300px] md:bottom-[670px] bottom-28 w-64 h-48 md:w-36 md:h-26'/>
+            <img src={sparkle} className='lg:bottom-12 lg:right-64 md:bottom-[650px] md:right-[70px] absolute lg:w-36 right-7 bottom-[400px] lg:h-26 w-24 h-24'/>
         </section>
 
         {/* overview */}
@@ -92,17 +128,17 @@ const LandingPage = () => {
             
                 {/* map */}
                 <div className=" flex mt-10 bottom-2 relative">
-                  <img src={map} alt="map" className="lg:w-[1000px] lg:h-[450px] md:w-[500px] md:h-[240px] md:flex hidden"/>
-                  <img src={sawah} alt="sawah" className="lg:w-[400px] lg:h-[600px] md:w-[250px] md:h-[350px] md:-mt-[109px] lg:-mt-[150px] md:ml-1 lg:ml-3 relative z-10 items-center justify-center"/>
-                  <div className='absolute lg:bottom-[450px] lg:right-[450px] lg:-top-20 top-0 right-72 md:-top-24 md:right-[210px] bg-[#FAFAFA] p-4 h-24 w-24  rounded-2xl shadow-md shadow-slate-900 rotate-[25deg] flex items-start z-20'>
+                  <img src={map} alt="map" className="lg:w-[800px] lg:h-[300px] md:w-[460px] md:h-[200px] lg:mt-5 md:flex hidden"/>
+                  <img src={sawah} alt="sawah" className="lg:w-[325px] lg:h-[471px] md:w-[240px] md:h-[320px] md:-mt-[118px] sm:mx-auto lg:-mt-[150px] md:ml-1 lg:ml-3 relative z-10 items-center justify-center"/>
+                  <div className='absolute lg:bottom-[450px] lg:right-[350px] lg:-top-24 top-14 right-72 md:-top-16 md:right-52 sm:top-36 sm:right-[460px] bg-[#FAFAFA] p-4 h-24 w-24  rounded-2xl shadow-md shadow-slate-900 rotate-[25deg] flex items-start z-20'>
                    <img src={emotTanya} alt="emottanya" className='w-8 h-8 absolute top-0 left-0'/>
                    <p className='absolute max-w-1/3 bottom-2 left-2 font-manrope text-md font-semibold'>Sesuai Moodmu</p>
                   </div>
-                  <div className='absolute lg:bottom-12 lg:right-52 md:bottom-6 md:right-16 bottom-28 right-36 bg-[#FAFAFA] p-4 h-24 w-24 rounded-2xl shadow-md shadow-slate-900 rotate-6 flex items-start z-20'>
+                  <div className='absolute lg:bottom-10 lg:left-[945px] md:bottom-6 md:left-[520px] sm:bottom-20 sm:left-60 bottom-28 right-36 bg-[#FAFAFA] p-4 h-24 w-24 rounded-2xl shadow-md shadow-slate-900 rotate-6 flex items-start z-20'>
                    <img src={jamMountain} alt="jamMountain" className='w-8 h-8 absolute top-0 left-0 -rotate-6'/>
                    <p className='absolute max-w-1/3 bottom-2 left-2 font-manrope text-md font-semibold'>Jelajah Tempat</p>
                   </div>
-                  <div className='absolute lg:top-5 lg:right-8 top-8 -right-8 md:-right-5 md:-top-8 bg-[#FAFAFA] p-4 h-24 w-24 rounded-2xl shadow-md shadow-slate-900 -rotate-8 flex items-start z-20'>
+                  <div className='absolute lg:-top-48 lg:right-8 -top-8 -right-6 md:-right-6 md:-top-36 sm:-top-4 sm:right-6 bg-[#FAFAFA] p-4 h-24 w-24 rounded-2xl shadow-md shadow-slate-900 -rotate-8 flex items-start z-20'>
                    <img src={emotCoba} alt="emotCoba" className='lg:w-6 lg:h-6 absolute top-0 left-0 -rotate-6'/>
                    <p className='absolute max-w-1/3 bottom-2 left-2 font-manrope text-md font-semibold'>Artificial Intelligence</p>
                   </div>
@@ -112,12 +148,15 @@ const LandingPage = () => {
 
         {/* testimony */}
         <section id='testimony'>
-            <div className='mt-10 min-w-screen min-h-screen flex flex-col items-center relative'>
-                  <img src={arrowRight} alt="arrowRight" className='items-start justify-start flex left-0 absolute md:w-36 md:h-32 w-20 h-20 rotate-2' />
-                  <img src={arrowLeft} alt="arrowLeft" className='items-start justify-start flex right-0 absolute md:w-36 md:h-32 w-24 h-24' />
-                  <img src={hand} alt="hand" className='w-15 h-15' />
-                  <h1 className='text-5xl font-semibold font-manrope text-[#2E2E2E] mt-3'>Cerita Seru Mereka</h1>
-                  <p className='text-[#8A9497] mt-3'>Langsung dari pengalaman mereka.</p>
+            <div className="mt-20 -mb-48 min-w-screen min-h-screen flex flex-col items-center relative">
+        <img src={arrowRight} alt="arrowRight" className="hidden md:block left-0 absolute md:w-36 md:h-32 rotate-2" />
+        <img src={arrowLeft} alt="arrowLeft" className="hidden md:block right-0 absolute md:w-36 md:h-32" />
+        <img src={hand} alt="hand" className="w-15 h-15" />
+        <h1 className="text-5xl font-semibold font-manrope text-[#2E2E2E] mt-3">Cerita Seru Mereka</h1>
+        <p className="text-[#8A9497] mt-3">Langsung dari pengalaman mereka.</p>
+
+        {/* Desktop layout */}
+        <div className='mt-10 min-w-screen min-h-screen lg:flex lg:flex-col items-center relative hidden'>
                   <div className='lg:flex lg:flex-row gap-4 mt-10'>
                     {/* Card 1 */}
                     <div className='w-[320px] h-[412px] rounded-2xl bg-[#FAFAFA] border-[#D6D6D6] border-2 flex flex-col'>
@@ -203,6 +242,44 @@ const LandingPage = () => {
                     </div>
                   </div>
                 </div>
+
+        {/* Mobile layout with swiper */}
+        <div className="lg:hidden w-full px-6 mt-10">
+          <Swiper
+            spaceBetween={16}
+            slidesPerView={1}
+            autoplay={{ delay: 3000 }}
+            loop={true}
+            modules={[Autoplay]}
+          >
+            {testimonyCards.map((card, i) => (
+              <SwiperSlide key={i}>
+                <div className="w-full rounded-2xl bg-[#FAFAFA] border-[#D6D6D6] border-2 p-4 h-auto min-h-[300px] flex flex-col">
+                  <img src={petik} alt="petik" className="w-8 h-8 mb-2" />
+                  <p className="font-manrope text-lg text-left text-[#939393]">{card.text}</p>
+                  <div className="flex items-center mt-4">
+                    <img src={card.image} alt={`pp-${card.name}`} className="w-14 h-14 rounded-full mr-3" />
+                    <div className="flex flex-col">
+                      <h1 className="font-semibold font-manrope text-[#2E2E2E] text-lg">{card.name}</h1>
+                      <p className="font-semibold font-manrope text-[#939393] text-md">{card.role}</p>
+                    </div>
+                  </div>
+                  {card.tags && (
+                    <div className="flex flex-row gap-2 mt-3">
+                      {card.tags.map((tag, j) => (
+                        <div key={j} className="bg-[#BEE1E6] rounded-lg px-2 py-1">
+                          <p className="text-[#003366] text-sm font-manrope font-semibold">{tag}</p>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                  <p className="text-[#939393] font-manrope font-semibold mt-4 text-right">{card.date}</p>
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
+      </div>
         </section>
     </section>
   )
