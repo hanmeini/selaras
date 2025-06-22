@@ -73,17 +73,15 @@ export default function Navbar() {
               <HamburgerIcon />
             </button>
             <Link to="/" className="hidden md:block">
-              <img src={logo} alt="logo" className="h-12 w-auto" />
+              <img src={logo} alt="logo" className="h-12 w-auto object-contain" />
             </Link>
           </div>
           
           {/* TENGAH: Navigasi lengkap hanya untuk Desktop */}
           <div className="hidden md:flex flex-auto justify-center items-center gap-10 text-sm font-medium text-[#2E2E2E]">
-            <Link to="/" className="hover:text-blue-600">Beranda</Link>
-            <Link to="/about" className="hover:text-blue-600">Tentang Kami</Link>
             <div className="relative" ref={layananRef}>
                 <button onClick={toggleLayanan} className="flex items-center gap-1 hover:text-blue-600">
-                    Layanan
+                    Jelajahi
                     <FiChevronDown className={`transition-transform duration-200 ${layananOpen ? 'rotate-180' : ''}`} />
                 </button>
                 {layananOpen && (
@@ -94,7 +92,7 @@ export default function Navbar() {
                     <p className="text-gray-400 text-xs font-semibold uppercase px-3 pb-2">Layanan</p>
                     
                     <Link 
-                      to='/chat' 
+                      to='/SelarasAI' 
                       onClick={() => setLayananOpen(false)} 
                       className="flex flex-row gap-3 items-center hover:bg-gray-100 p-3 rounded-lg w-full"
                     >
@@ -120,6 +118,7 @@ export default function Navbar() {
                   </div>
                 )}
             </div>
+            <Link to="/rekomendasi" className="hover:text-blue-600">Rekomendasi</Link>
             <Link to="/kontak" className="hover:text-blue-600">Kontak Kami</Link>
           </div>
           
@@ -149,10 +148,13 @@ export default function Navbar() {
                   )}
                 </div>
               ) : (
-                <Link to='/register' className="flex items-center bg-[#003366] h-10 rounded-full text-white font-medium px-6 text-sm hover:bg-blue-800">
-                  Daftar
-                </Link>
-              )}
+              <Link to='/register' className="hidden md:flex items-center justify-between bg-[#003366] w-32 h-11 rounded-full text-[#FAFAFA] font-medium px-3">
+                <span className="ml-2">Daftar</span>
+                <div className="ml-auto flex items-center justify-center md:w-6 md:h-6 lg:w-8 lg:h-8 rounded-full bg-[#FAFAFA]">
+                  <img src={person} alt="person icon" className="w-4 h-4" />
+                </div>
+              </Link>
+            )}
             </div>
           </div>
         </div>
@@ -183,21 +185,17 @@ export default function Navbar() {
               )}
               
 
-              <Link to="/" onClick={() => setMobileMenuOpen(false)} className="flex items-center gap-3 p-3 text-gray-700 font-medium rounded-lg hover:bg-gray-100">
-                <FiHome className="w-6 h-6" /> Beranda
-              </Link>
-              <Link to="/about" onClick={() => setMobileMenuOpen(false)} className="flex items-center gap-3 p-3 text-gray-700 font-medium rounded-lg hover:bg-gray-100">
-                <FiHelpCircle className="w-6 h-6" /> Tentang Kami
-              </Link>
-              
+              <Link to="/rekomendasi" onClick={() => setMobileMenuOpen(false)} className="flex items-center gap-3 p-3 text-gray-700 font-medium rounded-lg hover:bg-gray-100">
+                <FiHome className="w-6 h-6" /> Rekomendasi
+              </Link>              
               <div>
                 <button onClick={() => setMobileLayananOpen(!mobileLayananOpen)} className="flex items-center justify-between w-full p-3 text-gray-700 font-medium rounded-lg hover:bg-gray-100">
-                  <span className="flex items-center gap-3"><FiSend className="w-6 h-6" /> Layanan</span>
+                  <span className="flex items-center gap-3"><FiSend className="w-6 h-6" /> Jelajahi</span>
                   <FiChevronDown className={`transition-transform ${mobileLayananOpen ? 'rotate-180' : ''} w-6 h-6`} />
                 </button>
                 {mobileLayananOpen && (
                   <div className="pl-8 pt-1 space-y-1">
-                    <Link to="/chat" onClick={() => setMobileMenuOpen(false)} className="flex items-center gap-3 p-2 font-medium text-gray-600 rounded-lg hover:bg-gray-100">
+                    <Link to="/SelarasAI" onClick={() => setMobileMenuOpen(false)} className="flex items-center gap-3 p-2 font-medium text-gray-600 rounded-lg hover:bg-gray-100">
                       <img className="w-10 h-10 bg-[#003366] p-2 rounded-xl" src={stars} alt="ai icon"/> Selaras AI
                     </Link>
                     <Link to="/quiz" onClick={() => setMobileMenuOpen(false)} className="flex items-center gap-3 p-2 font-medium text-gray-600 rounded-lg hover:bg-gray-100">

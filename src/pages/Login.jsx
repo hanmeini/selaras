@@ -1,34 +1,54 @@
-import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from "react"; 
+import { useNavigate, useLocation } from 'react-router-dom';
 import login from "../assets/login.png";
-import unlock from '../assets/Unlock.png'
+import unlock from '../assets/Unlock.png';
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { auth, provider } from "../../firebase-config";
+import { useAuth } from "../context/Authcontext"; 
 
 const Login = () => {
     const navigate = useNavigate();
+    const location = useLocation();
+    const { userProfile } = useAuth(); 
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false); 
+
     const from = location.state?.from?.pathname || "/";
+
+    useEffect(() => {
+        if (userProfile) {
+            console.log("Login dan profil siap, mengarahkan ke:", from);
+            navigate(from, { replace: true });
+        }
+    }, [userProfile, navigate, from]);
+
 
     const handleEmailLogin = async (e) => {
         e.preventDefault();
+        setError('');
+        setLoading(true);
         try {
-        await signInWithEmailAndPassword(auth, email, password);
-        navigate(from, { replace: true });
-        } catch (error) {
-        alert(error.message);
+            // Tugas fungsi ini HANYA login, tidak navigasi
+            await signInWithEmailAndPassword(auth, email, password);
+        } catch (err) {
+            setError("Email atau kata sandi salah.");
+            setLoading(false);
         }
     };
 
-
     const handleGoogleLogin = async () => {
-      try {
-        await signInWithPopup(auth, provider);
-        navigate(from, { replace: true }); // arahkan kembali ke tujuan semula
-      } catch (error) {
-        alert(error.message);
-      }
+        setError('');
+        setLoading(true);
+        try {
+            // Tugas fungsi ini HANYA login, tidak navigasi
+            await signInWithPopup(auth, provider);
+        } catch (err) {
+            setError("Gagal masuk dengan Google. Silakan coba lagi.");
+            setLoading(false);
+        }
     };
 
   return (
@@ -70,12 +90,12 @@ const Login = () => {
         <p className="text-gray-500 mt-1 mb-6 text-center">
           Akses rekomendasi perjalanan personal hanya untukmu.
         </p>
-        <button onClick={handleGoogleLogin} className="w-full max-w-sm flex items-center justify-center gap-2 border rounded-full px-6 py-3 hover:shadow-md transition">
+        <button onClick={handleGoogleLogin} disabled={loading} className="w-full max-w-sm flex items-center justify-center gap-2 border rounded-full px-6 py-3 hover:shadow-md transition">
           <img
             src="https://img.icons8.com/color/48/000000/google-logo.png"
             className="w-5 h-5"
           />
-          <span className="text-sm font-semibold text-gray-700">Masuk dengan Google</span>
+          <span className="text-sm font-semibold text-gray-700">{loading ? 'Memproses...' : 'Masuk dengan Google'}</span>
         </button>
 
         <div className="my-6 w-full max-w-sm flex items-center justify-between">
@@ -107,9 +127,10 @@ const Login = () => {
           </div>
           <button
             type="submit"
+            disabled={loading}
             className="bg-[#003366] text-white rounded-full py-3 font-semibold hover:bg-blue-900 transition"
           >
-            Masuk
+            {loading ? 'Memproses...' : 'Masuk'}
           </button>
         </form>
 
