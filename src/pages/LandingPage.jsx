@@ -100,16 +100,16 @@ const LandingPage = () => {
         </section>
 
         {/* about */}
-        <section id='about' className='min-h-screen min-w-screen flex items-center justify-center relative overflow-x-hidden md:-mb-80 lg:mb-32'>
-            <img src={btr} className='absolute lg:top-20 md:top-0 md:left-36 bottom-24 -left-20 w-56 h-56 md:mt-32 md:w-30 md:h-30 items-start justify-start'/>
-            <img src={gunung} className='absolute md:top-0 md:right-28 bottom-28 -right-10 md:mt-32 mt-40 w-56 h-56 md:w-30 md:h-30 items-start justify-start'/>
+        <section id='about' className='min-h-screen min-w-screen flex items-center justify-center relative overflow-x-hidden md:mb-80 lg:mb-52'>
+            <img src={btr} className='absolute lg:top-20 md:top-0 md:left-36 bottom-24 -left-20 sm:-bottom-20 w-56 h-56 md:mt-32 md:w-30 md:h-30 items-start justify-start'/>
+            <img src={gunung} className='absolute md:top-0 md:right-28 bottom-28 -right-10 sm:-bottom-24 md:mt-32 mt-40 w-56 h-56 md:w-30 md:h-30 items-start justify-start'/>
             <div className='max-w-2xl text-center top-0 absolute mt-52'>
                 <h1 className='text-[#AAB5B5] font-manrope text-md'>Mood kamu, Destinasi kami.</h1>
                 <p className='md:text-4xl px-5 text-3xl mt-4 text-transparent bg-clip-text bg-gradient-to-r from-[#1E1E1E] to-[#D3CFCF] font-semibold font-manrope'>Selaras adalah platform rekomendasi perjalanan berbasis AI yang membantu kamu menemukan destinasi liburan sesuai mood dan preferensimu.</p>
             </div>  
-            <img src={emoji} className='absolute lg:top-[470px] lg:left-64 md:top-[480px] md:left-24 sm:top-[450px] left-5 top-[450px] lg:w-20 lg:h-20 w-14 h-14'/>
-            <img src={prambanan} className='absolute lg:bottom-[100px] lg:left-[520px] md:left-[300px] md:bottom-[670px] bottom-28 w-64 h-48 md:w-36 md:h-26'/>
-            <img src={sparkle} className='lg:bottom-12 lg:right-64 md:bottom-[650px] md:right-[70px] absolute lg:w-36 right-7 bottom-[400px] lg:h-26 w-24 h-24'/>
+            <img src={emoji} className='absolute lg:top-[525px] lg:left-64 md:top-[480px] md:left-24 sm:top-[380px] sm:left-24 left-5 top-[450px] lg:w-20 lg:h-20 w-14 h-14'/>
+            <img src={prambanan} className='absolute lg:bottom-[40px] lg:left-[550px] md:left-[300px] md:-bottom-3 sm:-bottom-16 bottom-28 w-64 h-48 md:w-36 md:h-26'/>
+            <img src={sparkle} className='lg:bottom-4 lg:right-64 md:-bottom-[30px] md:right-[70px] sm:bottom-24 absolute lg:w-36 right-7 bottom-[400px] lg:h-26 w-24 h-24'/>
         </section>
 
         {/* overview */}
@@ -246,7 +246,7 @@ const LandingPage = () => {
           <Swiper
             spaceBetween={16}
             slidesPerView={1}
-            autoplay={{ delay: 3000 }}
+            autoplay={{ delay: 4000 }}
             loop={true}
             modules={[Autoplay]}
           >
