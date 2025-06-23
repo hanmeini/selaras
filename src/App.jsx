@@ -16,6 +16,7 @@ import LandingPage from './pages/LandingPage';
 import ProfilePage from './pages/Profile';
 import DetailPage from './pages/DetailPage';
 import Contact from './components/Contact';
+import RedirectHandler from './pages/Redirect';
 
 function App() {
 
@@ -60,6 +61,7 @@ function App() {
         />
         <Route path="register" element={<Register />} />
         <Route path="login" element={<Login />} />
+        <Route path="/redirect" element={<RedirectHandler />} />
         <Route 
             path="/admin/dashboard" 
             element={

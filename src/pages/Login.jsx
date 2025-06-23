@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from 'react-router-dom';
 import login from "../assets/login.png";
 import unlock from '../assets/Unlock.png';
-import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { signInWithEmailAndPassword, signInWithPopup, signInWithRedirect  } from "firebase/auth";
 import { auth, provider } from "../../firebase-config";
 import { useAuth } from "../context/Authcontext"; 
 
@@ -45,19 +45,24 @@ const Login = () => {
 
 
     const handleGoogleLogin = async () => {
-        setError('');
-        setLoading(true);
-        try {
-            await signInWithPopup(auth, provider);
-        } catch (err) {
-            console.error("Google login error:", err.code, err.message);
-            if (err.code === 'auth/popup-closed-by-user') {
-                setError("Proses login dengan Google dibatalkan.");
-            } else {
-                setError("Gagal masuk dengan Google. Silakan coba lagi.");
-            }
-            setLoading(false);
+      setError('');
+      setLoading(true);
+
+      try {
+        if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+          await signInWithRedirect(auth, provider);
+        } else {
+          await signInWithPopup(auth, provider);
         }
+      } catch (err) {
+        console.error("Google login error:", err.code, err.message);
+        if (err.code === 'auth/popup-closed-by-user') {
+          setError("Proses login dengan Google dibatalkan.");
+        } else {
+          setError("Gagal masuk dengan Google. Silakan coba lagi.");
+        }
+        setLoading(false);
+      }
     };
 
   return (
