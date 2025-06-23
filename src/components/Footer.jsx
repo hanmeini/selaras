@@ -53,7 +53,7 @@ export default function Footer() {
 
       <div className='flex mx-5 mt-5'>
         <p className='text-[#D6D6D6] text-md font-semibold'>&copy; 2025 Selaras. Semua hak dilindungi.</p>
-        <div className='flex flex-row gap-4 right-4 absolute'>
+        <div className='flex flex-row gap-1 md:gap-4 right-4 absolute w-1/2 justify-end'>
           <img src={slack} alt="" className='w-6 h-6'/>
           <img src={linkedin} alt="" className='w-6 h-6'/>
           <img src={twitter} alt="" className='w-6 h-6'/>

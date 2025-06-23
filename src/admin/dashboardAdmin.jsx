@@ -91,16 +91,6 @@ const AdminDashboardPage = () => {
             <label className="block mb-1 font-medium text-left">Jumlah Review</label>
             <input type="number" placeholder="Jumlah Review (Contoh: 67)" value={reviewCount} onChange={(e) => setReviewCount(e.target.value)} required className="w-full p-3 border rounded"/>
           </div>
-
-          <p className="text-sm text-gray-500 -mb-4">Masukkan 3 URL Gambar:</p>
-          <input type="url" placeholder="URL Gambar Utama" value={imageUrl1} onChange={(e) => setImageUrl1(e.target.value)} required className="w-full p-3 border rounded"/>
-          <input type="url" placeholder="URL Gambar Galeri 2" value={imageUrl2} onChange={(e) => setImageUrl2(e.target.value)} required className="w-full p-3 border rounded"/>
-          <input type="url" placeholder="URL Gambar Galeri 3" value={imageUrl3} onChange={(e) => setImageUrl3(e.target.value)} required className="w-full p-3 border rounded"/>
-          
-          <textarea value={description} onChange={(e) => setDescription(e.target.value)} required rows="5" className="w-full p-3 border rounded" placeholder="Deskripsi Tentang Wisata (bisa 2 paragraf, pisahkan dengan Enter)."></textarea>
-          <textarea value={highlights} onChange={(e) => setHighlights(e.target.value)} required rows="5" className="w-full p-3 border rounded" placeholder="Highlights / Poin Keseruan (satu poin per baris)."></textarea>
-          <textarea value={infoUmum} onChange={(e) => setInfoUmum(e.target.value)} required rows="4" className="w-full p-3 border rounded" placeholder="Info Umum (satu poin per baris)."></textarea>
-          <textarea value={aksesibilitasDetails} onChange={(e) => setAksesibilitasDetails(e.target.value)} required rows="3" className="w-full p-3 border rounded" placeholder="Detail Aksesibilitas Difabel (satu poin per baris)."></textarea>          
           <div>
             <label className="block mb-1 font-medium text-left">Kategori</label>
             <select value={category} onChange={(e) => setCategory(e.target.value)} className="w-full p-2 border rounded">
@@ -121,6 +111,16 @@ const AdminDashboardPage = () => {
               ))}
             </div>
           </div>
+
+          <p className="text-sm text-gray-500 -mb-4">Masukkan 3 URL Gambar:</p>
+          <input type="url" placeholder="URL Gambar Utama" value={imageUrl1} onChange={(e) => setImageUrl1(e.target.value)} required className="w-full p-3 border rounded"/>
+          <input type="url" placeholder="URL Gambar Galeri 2" value={imageUrl2} onChange={(e) => setImageUrl2(e.target.value)} required className="w-full p-3 border rounded"/>
+          <input type="url" placeholder="URL Gambar Galeri 3" value={imageUrl3} onChange={(e) => setImageUrl3(e.target.value)} required className="w-full p-3 border rounded"/>
+          
+          <textarea value={description} onChange={(e) => setDescription(e.target.value)} required rows="5" className="w-full p-3 border rounded" placeholder="Deskripsi Tentang Wisata (bisa 2 paragraf, pisahkan dengan Enter)."></textarea>
+          <textarea value={highlights} onChange={(e) => setHighlights(e.target.value)} required rows="5" className="w-full p-3 border rounded" placeholder="Highlights / Poin Keseruan (satu poin per baris)."></textarea>
+          <textarea value={infoUmum} onChange={(e) => setInfoUmum(e.target.value)} required rows="4" className="w-full p-3 border rounded" placeholder="Info Umum (satu poin per baris)."></textarea>
+          <textarea value={aksesibilitasDetails} onChange={(e) => setAksesibilitasDetails(e.target.value)} required rows="3" className="w-full p-3 border rounded" placeholder="Detail Aksesibilitas Difabel (satu poin per baris)."></textarea>          
 
           <div>
             <label className="block mb-1 font-medium text-left">Akses Ramah Difabel?</label>

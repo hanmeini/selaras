@@ -15,6 +15,7 @@ import ChatPage from './pages/ChatPage';
 import LandingPage from './pages/LandingPage';
 import ProfilePage from './pages/Profile';
 import DetailPage from './pages/DetailPage';
+import Contact from './components/Contact';
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<LandingPage />} />
           <Route path='profile' element={<ProfilePage />} />
+          <Route path='kontak' element={<Contact />} />
           <Route
             path="/quiz"
             element={

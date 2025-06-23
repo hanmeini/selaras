@@ -31,7 +31,6 @@ import traveloka from '../assets/traveloka.png'
 import trivago from '../assets/trivago.png'
 import oyo from '../assets/oyo.png'
 import smile from '../assets/Smiley Fun.png'
-import arrow from '../assets/button-arrow.png'
 import bgHome from '../assets/bg-grid.png'
 
 const LandingPage = () => {
@@ -72,15 +71,14 @@ const LandingPage = () => {
         {/* home */}
         <section id='home' style={{ backgroundImage: `url(${bgHome})` }} className="flex flex-col pt-20 bg-cover bg-center bg-no-repeat h-full min-w-screen">
           <div className='flex flex-col p-20 justify-center items-center relative'>
-            <div className="w-full flex justify-end px-72">
-              <img src={smile} alt="smile" />
+            <div className="absolute top-1/4 left-3 md:left-auto md:right-8 lg:right-72">
+                <img src={smile} alt="smile" />
             </div>
             <div className='flex flex-col gap-10 items-center '>
-              <h1 className='font-bold text-5xl flex flex-row text-center'>Jelajahi  sesuai <span className='font-light text-5xl'>MOOD</span>-mu</h1>
+              <h1 className='font-bold text-[2rem] md:text-5xl text-center'>Jelajahi  sesuai <span className='font-light text-[2rem] md:text-5xl'>MOOD</span>-mu</h1>
               <p className='text-[#8A9497] max-w-[80%]'>Selaras bantu kamu temukan liburan terbaik sesuai mood, dengan rekomendasi dari <text className='font-bold text-black'>AI</text> ✨</p>
             </div>
             <button className='bg-[#003366] text-white px-5 py-3 rounded-full font-semibold mt-10 hover:scale-75 duration-300 cursor-pointer'>Mulai Sekarang</button>
-            <img className='absolute lg:left-[35%] lg:top-[60%] left-[10%] bottom-[10%]' src={arrow}/>
           </div>
           <div className='flex flex-col justify-center relative'>
             <div className='flex flex-row gap-5 justify-center items-center'>
@@ -107,7 +105,7 @@ const LandingPage = () => {
             <img src={gunung} className='absolute md:top-0 md:right-28 bottom-28 -right-10 md:mt-32 mt-40 w-56 h-56 md:w-30 md:h-30 items-start justify-start'/>
             <div className='max-w-2xl text-center top-0 absolute mt-52'>
                 <h1 className='text-[#AAB5B5] font-manrope text-md'>Mood kamu, Destinasi kami.</h1>
-                <p className='md:text-4xl text-3xl mt-4 text-transparent bg-clip-text bg-gradient-to-r from-[#1E1E1E] to-[#D3CFCF] font-semibold font-manrope'>Selaras adalah platform rekomendasi perjalanan berbasis AI yang membantu kamu menemukan destinasi liburan sesuai mood dan preferensimu.</p>
+                <p className='md:text-4xl px-5 text-3xl mt-4 text-transparent bg-clip-text bg-gradient-to-r from-[#1E1E1E] to-[#D3CFCF] font-semibold font-manrope'>Selaras adalah platform rekomendasi perjalanan berbasis AI yang membantu kamu menemukan destinasi liburan sesuai mood dan preferensimu.</p>
             </div>  
             <img src={emoji} className='absolute lg:top-[470px] lg:left-64 md:top-[480px] md:left-24 sm:top-[450px] left-5 top-[450px] lg:w-20 lg:h-20 w-14 h-14'/>
             <img src={prambanan} className='absolute lg:bottom-[100px] lg:left-[520px] md:left-[300px] md:bottom-[670px] bottom-28 w-64 h-48 md:w-36 md:h-26'/>
@@ -116,14 +114,14 @@ const LandingPage = () => {
 
         {/* overview */}
         <section id='overview'>
-            <div className="min-w-screen h-fit overflow-hidden bg-[#003366] p-8 relative lg:-mt-32 md:-mt-60">
+            <div className="min-w-screen h-fit overflow-hidden bg-[#003366] px-8 pt-8 relative lg:-mt-32 md:-mt-60">
                 <div className="flex flex-col items-start justify-start">
                   <img src={logonoName} alt="logononame" className="lg:w-14 lg:h-14 w-10 h-10" />
                   <div className="text-start font-manrope font-semibold lg:text-5xl text-3xl mt-5 relative">
                     <h1 className="text-[#FAFAFA] leading-snug">Nikmati <span className="text-[#B9D7F5]">Liburan </span>Dengan <span className="text-[#FFC300] relative inline-block">Cara Baru<img src={ciprat} alt="ciprat" className="absolute lg:-top-5 lg:-right-10 lg:w-16 lg:h-14 w-14 h-14 -top-4 -right-12"/></span></h1>
                   </div>
                   <p className="text-[#DBDBDB] font-manrope lg:text-xl max-w-md text-start">Rasakan pengalaman liburan yang lebih personal, sesuai mood dan gayamu.</p>
-                  <button className="font-semibold font-manrope text-[#003366] items-center lg:text-center text-sm lg:text-md bg-[#FAFAFA] lg:w-44 lg:h-11 w-36 h-8 rounded-4xl mt-6 flex hover:scale-85 duration-250 cursor-pointer"><img src={emotCoba} alt="emot coba" className="lg:w-5 lg:h-5 w-3 h-3 mx-3"/>Coba Sekarang</button>
+                  <button className="font-semibold font-manrope text-[#003366] items-center lg:text-center text-sm lg:text-md bg-[#FAFAFA] lg:w-44 lg:h-11 w-36 h-11 rounded-4xl mt-6 flex hover:scale-85 duration-250 cursor-pointer"><img src={emotCoba} alt="emot coba" className="lg:w-5 lg:h-5 w-3 h-3 mx-3"/>Coba Sekarang</button>
                 </div>
             
                 {/* map */}
@@ -148,7 +146,7 @@ const LandingPage = () => {
 
         {/* testimony */}
         <section id='testimony'>
-            <div className="mt-20 -mb-48 min-w-screen min-h-screen flex flex-col items-center relative">
+            <div className="mt-20 mb-48 min-w-screen h-max flex flex-col items-center relative">
         <img src={arrowRight} alt="arrowRight" className="hidden md:block left-0 absolute md:w-36 md:h-32 rotate-2" />
         <img src={arrowLeft} alt="arrowLeft" className="hidden md:block right-0 absolute md:w-36 md:h-32" />
         <img src={hand} alt="hand" className="w-15 h-15" />

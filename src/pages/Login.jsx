@@ -16,7 +16,7 @@ const Login = () => {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false); 
 
-    const from = location.state?.from?.pathname || "/";
+    const from = location.state?.from?.pathname || "/rekomendasi";
 
     useEffect(() => {
         if (userProfile) {
@@ -31,22 +31,31 @@ const Login = () => {
         setError('');
         setLoading(true);
         try {
-            // Tugas fungsi ini HANYA login, tidak navigasi
             await signInWithEmailAndPassword(auth, email, password);
         } catch (err) {
-            setError("Email atau kata sandi salah.");
+            console.error("Email login error:", err.code, err.message);
+            if (err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password' || err.code === 'auth/invalid-credential') {
+                setError("Email atau kata sandi yang Anda masukkan salah.");
+            } else {
+                setError("Terjadi kesalahan. Silakan coba lagi.");
+            }
             setLoading(false);
         }
     };
+
 
     const handleGoogleLogin = async () => {
         setError('');
         setLoading(true);
         try {
-            // Tugas fungsi ini HANYA login, tidak navigasi
             await signInWithPopup(auth, provider);
         } catch (err) {
-            setError("Gagal masuk dengan Google. Silakan coba lagi.");
+            console.error("Google login error:", err.code, err.message);
+            if (err.code === 'auth/popup-closed-by-user') {
+                setError("Proses login dengan Google dibatalkan.");
+            } else {
+                setError("Gagal masuk dengan Google. Silakan coba lagi.");
+            }
             setLoading(false);
         }
     };
@@ -90,6 +99,7 @@ const Login = () => {
         <p className="text-gray-500 mt-1 mb-6 text-center">
           Akses rekomendasi perjalanan personal hanya untukmu.
         </p>
+        {error && <p className="bg-red-100 text-red-700 text-center p-3 rounded-lg mb-4 text-sm">{error}</p>}
         <button onClick={handleGoogleLogin} disabled={loading} className="w-full max-w-sm flex items-center justify-center gap-2 border rounded-full px-6 py-3 hover:shadow-md transition">
           <img
             src="https://img.icons8.com/color/48/000000/google-logo.png"

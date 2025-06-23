@@ -1,58 +1,62 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import login from "../assets/login.png";
 import unlock from '../assets/Unlock.png';
 import { auth, provider, db } from "../../firebase-config";
 import {
   createUserWithEmailAndPassword,
-  signInWithPopup,
   updateProfile,
 } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, serverTimestamp } from "firebase/firestore";
+import { useAuth } from "../context/Authcontext"; 
 
 const Register = () => {
   const navigate = useNavigate();
+  const { userProfile } = useAuth(); 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+        if (userProfile) {
+            navigate("/"); 
+        }
+  }, [userProfile, navigate]);
 
   const handleRegister = async (e) => {
-    e.preventDefault();
-    try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
+        e.preventDefault();
+        setError('');
+        setLoading(true);
 
-      await updateProfile(user, { displayName: name });
+        try {
 
-      await setDoc(doc(db, "users", user.uid), {
-        name: name,
-        email: user.email,
-        createdAt: new Date()
-      });
-
-      alert("Registrasi berhasil!");
-      navigate("/");
-    } catch (error) {
-      alert(error.message);
-    }
-  };
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
+            await updateProfile(user, { displayName: name });
+            await setDoc(doc(db, "users", user.uid), {
+                name: name,
+                email: user.email,
+                photoURL: user.photoURL, 
+                role: "user", 
+                createdAt: serverTimestamp() 
+            });
+        } catch (err) {
+            console.error("Register error:", err.code);
+            if (err.code === 'auth/email-already-in-use') {
+                setError("Email ini sudah terdaftar. Silakan coba login.");
+            } else if (err.code === 'auth/weak-password') {
+                setError("Kata sandi terlalu lemah. Minimal 6 karakter.");
+            } else {
+                setError("Gagal membuat akun. Silakan coba lagi.");
+            }
+            setLoading(false); 
+        }
+    };
 
   const handleGoogle = async () => {
-    try {
-      const result = await signInWithPopup(auth, provider);
-      const user = result.user;
-
-      await setDoc(doc(db, "users", user.uid), {
-        fullName: user.displayName,
-        email: user.email,
-        photoURL: user.photoURL,
-        createdAt: new Date()
-      });
-
-      navigate("/");
-    } catch (error) {
-      alert(error.message);
-    }
+    navigate('/login')
   };
 
   return (
@@ -93,7 +97,8 @@ const Register = () => {
         </h2>
         <p className="text-gray-500 mt-1 mb-6 text-center">
           Mulai petualanganmu bersama Selaras
-        </p>
+        </p> 
+        {error && <p className="bg-red-100 text-red-700 text-center p-3 rounded-lg mb-4 text-sm">{error}</p>}
         <button onClick={handleGoogle} className="w-full max-w-sm flex items-center justify-center gap-2 border rounded-full px-6 py-3 hover:shadow-md transition">
           <img
             src="https://img.icons8.com/color/48/000000/google-logo.png"
@@ -141,9 +146,10 @@ const Register = () => {
           </div>
           <button
             type="submit"
+            disabled={loading}
             className="bg-[#003366] text-white rounded-full py-3 font-semibold hover:bg-blue-900 transition"
           >
-            Daftar
+          {loading ? 'Mendaftarkan...' : 'Daftar'}
           </button>
         </form>
 
