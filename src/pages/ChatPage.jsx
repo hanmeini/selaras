@@ -88,11 +88,11 @@ const ChatPage = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch('http://localhost:3001/api/ask', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: currentInput }),
-      });
+      const response = await fetch('/api/ask', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: input }),
+    });
 
       if (!response.ok) throw new Error('Network response was not ok');
 
