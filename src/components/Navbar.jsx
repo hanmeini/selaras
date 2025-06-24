@@ -80,7 +80,7 @@ export default function Navbar() {
           {/* TENGAH: Navigasi lengkap hanya untuk Desktop */}
           <div className="hidden md:flex flex-auto justify-center items-center gap-10 text-sm font-medium text-[#2E2E2E]">
             <div className="relative" ref={layananRef}>
-                <button onClick={toggleLayanan} className="flex items-center gap-1 hover:text-blue-600">
+                <button onClick={toggleLayanan} className="flex items-center gap-1 hover:text-blue-600 hover:-translate-y-1 transition-all duration-300 ease-in-out">
                     Jelajahi
                     <FiChevronDown className={`transition-transform duration-200 ${layananOpen ? 'rotate-180' : ''}`} />
                 </button>
@@ -118,8 +118,8 @@ export default function Navbar() {
                   </div>
                 )}
             </div>
-            <Link to="/rekomendasi" className="hover:text-blue-600">Rekomendasi</Link>
-            <Link to="/kontak" className="hover:text-blue-600">Kontak Kami</Link>
+            <Link to="/rekomendasi" className="hover:text-blue-600 hover:-translate-y-1 transition-all duration-300 ease-in-out">Rekomendasi</Link>
+            <Link to="/kontak" className="hover:text-blue-600 hover:-translate-y-1 transition-all duration-300 ease-in-out">Kontak Kami</Link>
           </div>
           
           {/* KANAN: Logo (Mobile) atau Profil/Daftar (Desktop) */}
@@ -136,8 +136,8 @@ export default function Navbar() {
                   {profileOpen && ( 
                     <div className="absolute top-full mt-3 right-0 bg-white shadow-lg rounded-xl p-4 z-50 w-60 border">
                       <div className="border-b pb-3 mb-3">
-                        <p className="font-bold text-sm truncate">{userProfile.name || 'Pengguna'}</p>
-                        <p className="text-xs text-gray-500 truncate">{userProfile.email}</p>
+                        <p className="font-bold text-sm truncate text-left">{userProfile.name || 'Pengguna'}</p>
+                        <p className="text-xs text-gray-500 truncate text-left">{userProfile.email}</p>
                       </div>
                       <Link to="/profile" onClick={() => setProfileOpen(false)} className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md">Profil Saya</Link>
                       {userProfile.role === 'admin' && (
@@ -172,8 +172,8 @@ export default function Navbar() {
               {userProfile ? (
                 <Link to="/profile" onClick={() => setMobileMenuOpen(false)} className="flex items-center gap-3 p-3 mb-2 rounded-lg bg-gray-100">
                   {userProfile.photoURL ? <img src={userProfile.photoURL} alt="Profil" className="w-10 h-10 rounded-full object-cover"/> : <DefaultAvatar />}
-                  <div className="truncate">
-                    <p className="font-bold text-sm text-gray-800">{userProfile.name || 'Pengguna'}</p>
+                  <div className="truncate justify-start flex flex-col">
+                    <p className="font-bold text-sm text-gray-800 text-left">{userProfile.name || 'Pengguna'}</p>
                     <p className="text-xs text-gray-500">{userProfile.email}</p>
                   </div>
                 </Link>

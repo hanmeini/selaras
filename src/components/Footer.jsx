@@ -6,6 +6,8 @@ import slack from '../assets/slack.png'
 import instagram from '../assets/instagram.png'
 import twitter from '../assets/twitter.png'
 import linkedin from '../assets/linkedin.png'
+import { HashLink } from 'react-router-hash-link';
+import { Link } from 'react-router-dom'
 
 export default function Footer() {
   return (
@@ -28,10 +30,10 @@ export default function Footer() {
           <div className='flex flex-col'>
           <h1 className='text-white font-semibold text-left lg:text-center mb-2'>Navigasi</h1>
           <div className='text-left flex flex-col lg:ml-10'>
-            <a href="#home" className="text-[#B3B3B3] font-manrope text-md">Beranda</a>
-            <a href="#about" className="text-[#B3B3B3] font-manrope text-md">Tentang Kami</a>
-            <a href="#overview" className="text-[#B3B3B3] font-manrope text-md">Cerita Mereka</a>
-            <a href="#contact" className="text-[#B3B3B3] font-manrope text-md">Kontak Kami</a>
+            <HashLink smooth to='/#landingpage' className="text-[#B3B3B3] font-manrope text-md  hover:text-white hover:translate-x-1 transition-all duration-300 ease-in-out">Beranda</HashLink>
+            <HashLink smooth to='/#about' className="text-[#B3B3B3] font-manrope text-md  hover:text-white hover:translate-x-1 transition-all duration-300 ease-in-out">Tentang Kami</HashLink>
+            <HashLink smooth to='/#testimony' className="text-[#B3B3B3] font-manrope text-md  hover:text-white hover:translate-x-1 transition-all duration-300 ease-in-out">Cerita Mereka</HashLink>
+            <HashLink smooth to='/kontak' className="text-[#B3B3B3] font-manrope text-md  hover:text-white hover:translate-x-1 transition-all duration-300 ease-in-out">Kontak Kami</HashLink>
           </div>
         </div>
 
@@ -39,8 +41,8 @@ export default function Footer() {
         <div className='flex flex-col lg:ml-10 ml-6'>
           <h1 className='text-white font-semibold text-center mb-2'>Layanan</h1>
           <div className='text-left flex flex-col ml-3'>
-            <a href="#quiz" className="text-[#B3B3B3] font-manrope text-md">Quiz</a>
-            <a href="#ai" className="text-[#B3B3B3] font-manrope text-md">Selaras AI</a>
+            <a href="quiz" className="text-[#B3B3B3] font-manrope text-md  hover:text-white hover:translate-x-1 transition-all duration-300 ease-in-out">Quiz</a>
+            <a href="SelarasAI" className="text-[#B3B3B3] font-manrope text-md  hover:text-white hover:translate-x-1 transition-all duration-300 ease-in-out">Selaras AI</a>
           </div>
         </div>
         </div>

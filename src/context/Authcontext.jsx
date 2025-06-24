@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { doc, getDoc, setDoc } from "firebase/firestore";
-import { auth, db } from "../../firebase-config"; 
+import { auth, db } from "../../firebase-config";
 
 const AuthContext = React.createContext();
 
@@ -18,40 +18,60 @@ export function AuthProvider({ children }) {
       if (user) {
         const docRef = doc(db, "users", user.uid);
         try {
-          console.log("Mencoba mengambil/membuat dokumen untuk UID:", user.uid);
+          console.log("🟡 Login terdeteksi. UID:", user.uid);
+
           const docSnap = await getDoc(docRef);
 
           if (docSnap.exists()) {
-            console.log("Dokumen ditemukan, mengambil profil.");
+            console.log("✅ Dokumen user ditemukan di Firestore");
+
+            // Perbarui photoURL jika kosong
+            if (!docSnap.data().photoURL && user.photoURL) {
+              console.log("🔁 Memperbarui photoURL di Firestore...");
+              await setDoc(docRef, { photoURL: user.photoURL }, { merge: true });
+            }
+
             setUserProfile({
+              ...docSnap.data(),
               uid: user.uid,
-              photoURL: user.photoURL,
-              ...docSnap.data()
-            });
-          } else {
-            console.log("Dokumen tidak ditemukan, membuat profil baru...");
-            const newUserProfile = {
-              name: user.displayName,
               email: user.email,
-              photoURL: user.photoURL,
+              photoURL: docSnap.data().photoURL || user.photoURL || null, // fallback
+              name: user.displayName || docSnap.data().name || "Pengguna",
+            });
+
+          } else {
+            console.log("📄 Dokumen tidak ditemukan. Membuat user baru...");
+            const newUserProfile = {
+              name: user.displayName || "Pengguna",
+              email: user.email,
+              photoURL: user.photoURL || null,
               role: "user",
             };
             await setDoc(docRef, newUserProfile);
-            console.log("Profil baru berhasil dibuat di Firestore.");
+            console.log("✅ Profil baru berhasil dibuat");
+
             setUserProfile({
               uid: user.uid,
-              ...newUserProfile
+              ...newUserProfile,
             });
           }
+
         } catch (error) {
-          console.error("AuthContext GAGAL berinteraksi dengan Firestore!", error);
-          setUserProfile(user);
+          console.error("❌ Gagal memuat profil pengguna:", error);
+          setUserProfile({
+            uid: user.uid,
+            email: user.email,
+            name: user.displayName || "Pengguna",
+            photoURL: user.photoURL || null,
+          });
         }
       } else {
+        console.log("👤 Tidak ada user login");
         setUserProfile(null);
       }
       setLoading(false);
     });
+
     return unsubscribe;
   }, []);
 
@@ -62,16 +82,16 @@ export function AuthProvider({ children }) {
   const refreshUserProfile = async () => {
     const currentUser = auth.currentUser;
     if (currentUser) {
-      console.log("Memperbarui profil dari Firestore...");
       const docRef = doc(db, "users", currentUser.uid);
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
         setUserProfile({
           uid: currentUser.uid,
-          photoURL: currentUser.photoURL,
-          ...docSnap.data()
+          email: currentUser.email,
+          photoURL: docSnap.data().photoURL || currentUser.photoURL || null,
+          name: docSnap.data().name || currentUser.displayName || "Pengguna",
+          ...docSnap.data(),
         });
-        console.log("Profil berhasil diperbarui di state.");
       }
     }
   };

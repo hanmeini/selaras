@@ -160,7 +160,7 @@ const QuizPage = () => {
   return (
     <div
       style={{ backgroundImage: `url(${bgHome})` }}
-      className="min-h-screen bg-gray-50 p-4 sm:p-8 md:p-12 mt-16 bg-cover bg-center bg-no-repeat"
+      className="min-h-screen bg-gray-50 p-4 sm:p-8 md:p-12 mt-16 bg-cover bg-center bg-no-repeat font-manrope"
     >
       <div className="text-sm text-gray-600 mt-5 md:mt-0 mb-4 flex justify-start gap-1">
         <Link

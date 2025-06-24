@@ -1,6 +1,7 @@
 import React from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
+import { useNavigate } from 'react-router-dom';
 import 'swiper/css';
 import 'swiper/css/autoplay';
 import btr from '../assets/btr.png'
@@ -34,6 +35,7 @@ import smile from '../assets/Smiley Fun.png'
 import bgHome from '../assets/bg-grid.png'
 
 const LandingPage = () => {
+  const navigate = useNavigate();
   const testimonyCards = [
     {
       name: 'Biantara Nadif',
@@ -78,7 +80,7 @@ const LandingPage = () => {
               <h1 className='font-bold text-[2rem] md:text-5xl text-center'>Jelajahi  sesuai <span className='font-light text-[2rem] md:text-5xl'>MOOD</span>-mu</h1>
               <p className='text-[#8A9497] max-w-[80%]'>Selaras bantu kamu temukan liburan terbaik sesuai mood, dengan rekomendasi dari <text className='font-bold text-black'>AI</text> ✨</p>
             </div>
-            <button className='bg-[#003366] text-white px-5 py-3 rounded-full font-semibold mt-10 hover:scale-75 duration-300 cursor-pointer'>Mulai Sekarang</button>
+            <button onClick={()=> (navigate('/SelarasAI'))} className='bg-[#003366] text-white px-5 py-3 rounded-full font-semibold mt-10 hover:scale-90 duration-300 cursor-pointer'>Mulai Sekarang</button>
           </div>
           <div className='flex flex-col justify-center relative'>
             <div className='flex flex-row gap-5 justify-center items-center'>
@@ -121,7 +123,7 @@ const LandingPage = () => {
                     <h1 className="text-[#FAFAFA] leading-snug">Nikmati <span className="text-[#B9D7F5]">Liburan </span>Dengan <span className="text-[#FFC300] relative inline-block">Cara Baru<img src={ciprat} alt="ciprat" className="absolute lg:-top-5 lg:-right-10 lg:w-16 lg:h-14 w-14 h-14 -top-4 -right-12"/></span></h1>
                   </div>
                   <p className="text-[#DBDBDB] font-manrope lg:text-xl max-w-md text-start">Rasakan pengalaman liburan yang lebih personal, sesuai mood dan gayamu.</p>
-                  <button className="font-semibold font-manrope text-[#003366] items-center lg:text-center text-sm lg:text-md bg-[#FAFAFA] lg:w-44 lg:h-11 w-36 h-11 rounded-4xl mt-6 flex hover:scale-85 duration-250 cursor-pointer"><img src={emotCoba} alt="emot coba" className="lg:w-5 lg:h-5 w-3 h-3 mx-3"/>Coba Sekarang</button>
+                  <button onClick={() => navigate('/quiz')} className="font-semibold font-manrope text-[#003366] items-center lg:text-center text-sm lg:text-md bg-[#FAFAFA] lg:w-44 lg:h-11 w-36 h-11 rounded-4xl mt-6 flex hover:scale-85 duration-250 cursor-pointer"><img src={emotCoba} alt="emot coba" className="lg:w-5 lg:h-5 w-3 h-3 mx-3"/>Coba Sekarang</button>
                 </div>
             
                 {/* map */}
