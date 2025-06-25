@@ -15,5 +15,16 @@ export default defineConfig({
     headers: {
       'Cross-Origin-Opener-Policy': 'same-origin-allow-popups',
     },
+    allowedHosts: ['.ngrok-free.app'],
+        proxy: {
+      // Setiap permintaan ke '/api' akan diteruskan ke server backend Anda
+      '/api': {
+        target: 'http://localhost:3001', // Alamat server backend Anda
+        changeOrigin: true,
+        // Hapus '/api' dari awal path sebelum meneruskan
+        // contoh: /api/ask -> /ask
+        rewrite: (path) => path.replace(/^\/api/, ''),
+      },
+    },
   },
 })

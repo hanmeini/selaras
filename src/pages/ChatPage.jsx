@@ -88,11 +88,15 @@ const ChatPage = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch('/api/ask', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message: input }),
-    });
+      const response = await fetch('https://selaras-next.vercel.app/api/ask', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: input,
+          history: [], 
+        }),
+      });
+
 
       if (!response.ok) throw new Error('Network response was not ok');
 
@@ -108,12 +112,21 @@ const ChatPage = () => {
           timestamp: serverTimestamp(),
         });
         setCurrentChatId(newDocRef.id);
-      }
-      
-    } catch (err) {
-      console.error(err);
-      setMessages(prev => [...prev, { role: 'ai', content: 'Maaf, terjadi kesalahan.' }]);
-    } finally {
+      }  
+      } catch (err) {
+        console.error("Fetch Error:", err);
+        let errorMessage = 'Maaf, terjadi kesalahan saat menghubungi server.';
+        
+        // Coba ambil pesan error spesifik dari backend jika ada
+        if (err.response && err.response.data && err.response.data.error) {
+          errorMessage = err.response.data.error;
+        } else if (err.message) {
+          // Untuk error jaringan seperti 'Network Error'
+          errorMessage = err.message;
+        }
+        
+        setMessages(prev => [...prev, { role: 'ai', content: errorMessage }]);
+      } finally {
       setIsLoading(false);
     }
   };
